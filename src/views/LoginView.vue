@@ -16,7 +16,7 @@ export default {
   },
 
   methods:{
-    ...mapActions(["login"]),
+    ...mapActions(["login", "getUserData"]),
 
     async handleLogin() {
       const credentials = {
@@ -26,7 +26,8 @@ export default {
 
       try {
         await this.login(credentials);
-        this.$router.push("/");
+        await this.getUserData();
+        this.$router.push("/collection");
       }
       catch (error) {
         console.error(error);
