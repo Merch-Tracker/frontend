@@ -36,7 +36,7 @@ export default {
         <div class="me-auto" v-if="isAuth">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link to="/" class="nav-link active">Collection</router-link>
+              <router-link to="/collection" class="nav-link active">Collection</router-link>
             </li>
           </ul>
         </div>
@@ -64,7 +64,7 @@ export default {
               <span class="nav-link active">|</span>
             </li>
             <li class="nav-item">
-              <span class="nav-link disabled">Logout</span>
+              <a class="nav-link active" href="#" @click.prevent="handleLogout">Logout</a>
             </li>
           </ul>
         </div>

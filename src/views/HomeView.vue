@@ -2,5 +2,9 @@
 </script>
 
 <template>
-  <h1>Sample text</h1>
+  <div>
+    <h1 class="text-center">Welcome to merch parsing service</h1>
+    <h2 class="text-center mt-3">Log in to proceed.</h2>
+    <h2 class="text-center mt-3">Or register if you're new to this service!</h2>
+  </div>
 </template>
