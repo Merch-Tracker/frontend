@@ -1,6 +1,7 @@
 import Vuex from "vuex";
 import authAndToken from "@/store/modules/authAndToken.js";
 import userData from "@/store/modules/userData.js";
+import merch from "@/store/modules/merch.js";
 
 
 export default new Vuex.Store({
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     modules: {
         authAndToken,
         userData,
+        merch,
     },
 });

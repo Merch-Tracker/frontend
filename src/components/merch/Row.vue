@@ -1,6 +1,17 @@
 <script>
 export default {
-  name: "MerchRow"
+  name: "MerchRow",
+
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+      required: true,
+    },
+  },
 }
 </script>
 
@@ -8,7 +19,8 @@ export default {
 <div class="card mt-2 d-flex flex-column flex-md-row shadow-sm">
   <img src="https://placehold.co/300x200" class="card-img-top img-fluid w-auto" alt="Placeholder">
   <div class="card-body">
-    <h5 class="card-title">Заголовок карточки</h5>
+    <h5 class="card-title"><strong>{{ name }}</strong></h5>
+    <p class="card-text">Link: <strong>{{ link }}</strong></p>
     <p class="card-text">Это текст карточки, который находится под изображением на мобильных устройствах и справа на компьютерах. Здесь можно разместить дополнительную информацию.</p>
     <div class="d-flex flex-column flex-md-row justify-content-end">
       <div class="text-end me-md-3">

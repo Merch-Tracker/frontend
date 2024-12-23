@@ -1,6 +1,16 @@
 <script>
 export default {
-  name: "MerchCard"
+  name: "MerchCard",
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+      required: true,
+    },
+  },
 }
 </script>
 
@@ -9,6 +19,8 @@ export default {
   <div class="card shadow-sm">
     <img src="https://placehold.co/400x225" class="card-img-left" alt="Placeholder">
     <div class="card-body">
+      <p class="card-text">Name: <strong>{{ name }}</strong></p>
+      <p class="card-text">Link: <strong>{{ link }}</strong></p>
       <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
