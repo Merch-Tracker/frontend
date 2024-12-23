@@ -1,20 +1,24 @@
 <script>
 import MerchCard from "@/components/merch/Card.vue";
 import MerchRow from "@/components/merch/Row.vue";
+import TopBlock from "@/components/merch/TopBlock.vue";
+import {mapGetters} from "vuex";
+
 
 export default {
-  components: {MerchRow, MerchCard},
+  components: {TopBlock, MerchRow, MerchCard},
   computed: {
-    username() {
-      return this.$store.getters.userName
-    }
+    ...mapGetters("userData", ["userName"]),
   }
 }
 </script>
 
 <template>
-<h1 class="text-center">Your collection, master {{ username }}</h1>
   <div class="container">
+    <TopBlock />
+  </div>
+  <div class="container" style="padding-top: 60px;">
+  <h1 class="text-center">Your collection, master {{ userName }}</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <MerchCard />
       <MerchCard />
@@ -40,8 +44,6 @@ export default {
     </div>
   </div>
 
-
-  <div class="container mt-5"></div>
 </template>
 
 <style scoped>

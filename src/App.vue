@@ -1,19 +1,13 @@
 <script>
 import {defineComponent} from "vue";
 import Navbar from "@/components/Navbar.vue";
-import {mapActions, mapState} from "vuex";
+import {mapActions} from "vuex";
 
 export default defineComponent({
   components: {Navbar},
 
-  computed: {
-    ...mapState({
-      user: state => state.user,
-    }),
-  },
-
   methods: {
-    ...mapActions(["getUserData"]),
+    ...mapActions("userData", ["getUserData"]),
   },
 
   created() {

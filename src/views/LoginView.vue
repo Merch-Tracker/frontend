@@ -12,11 +12,12 @@ export default {
   },
 
   computed:{
-    ...mapGetters(["isAuth"]),
+    ...mapGetters("authAndToken", ["isAuth"]),
   },
 
   methods:{
-    ...mapActions(["login", "getUserData"]),
+    ...mapActions("userData", ["getUserData"]),
+    ...mapActions("authAndToken", ["login"]),
 
     async handleLogin() {
       const credentials = {
@@ -36,7 +37,7 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    if (localStorage.getItem("isAuth") === "true") {
+    if (localStorage.getItem("isAuth")) {
       next({ path : "/" });
     } else {
       next();
