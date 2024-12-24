@@ -5,6 +5,7 @@ import RegisterView from "@/views/RegisterView.vue";
 import PersonalView from "@/views/PersonalView.vue";
 import CollectionView from "@/views/merch/CollectionView.vue";
 import NewMerchView from "@/views/merch/NewMerchView.vue";
+import DetailedView from "@/views/merch/DetailedView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,15 +31,20 @@ const router = createRouter({
       component: PersonalView,
     },
     {
-      path: "/collection",
+      path: "/merch/collection",
       name: "collection",
       component: CollectionView,
     },
     {
-      path: "/newmerch",
-      name: "newmerch",
+      path: "/merch/new",
+      name: "merchnew",
       component: NewMerchView,
-    }
+    },
+    {
+      path: "/merch/:id",
+      name: "merchdetail",
+      component: DetailedView,
+    },
   ],
 });
 

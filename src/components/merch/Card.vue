@@ -10,6 +10,10 @@ export default {
       type: String,
       required: true,
     },
+    uuid: {
+      type: String,
+      required: true,
+    }
   },
 }
 </script>

@@ -35,7 +35,7 @@ export default {
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="isAuth">
           <li class="nav-item">
-            <router-link to="/collection" class="nav-link active">Collection</router-link>
+            <router-link to="/merch/collection" class="nav-link active">Collection</router-link>
           </li>
         </ul>
 

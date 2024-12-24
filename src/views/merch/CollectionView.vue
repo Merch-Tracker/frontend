@@ -36,21 +36,21 @@ export default {
   <h1 class="text-center">Your collection, master {{ userName }}</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <div v-for="item in readAllMerch" :key="item">
-        <MerchCard :name="item.name" :link="item.link" />
+        <router-link :to="{ name: 'merchdetail', params: { id: item.MerchUuid } }" class="custom-no-underline">
+          <MerchCard
+              :name="item.name"
+              :link="item.link"
+              :uuid="item.MerchUuid"
+          />
+        </router-link>
       </div>
     </div>
   </div>
-
-  <div class="container mt-3">
-    <div class="row">
-      <div v-for="item in readAllMerch" :key="item">
-        <MerchRow :name="item.name" :link="item.link" />
-      </div>
-    </div>
-  </div>
-
 </template>
 
 <style scoped>
-
+.custom-no-underline{
+  text-decoration: none;
+  color: inherit;
+}
 </style>

@@ -28,7 +28,7 @@ export default {
       try {
         await this.login(credentials);
         await this.getUserData();
-        this.$router.push("/collection");
+        this.$router.push("/merch/collection");
       }
       catch (error) {
         console.error(error);

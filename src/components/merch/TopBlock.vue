@@ -14,8 +14,8 @@ export default {
   <div class="container custom-fixed-top mt-1">
     <div class="card">
       <div class="card-body p-2 d-flex justify-content-between align-items-center">
-        <span>Всего записей: {{ merchCount }}</span>
-        <router-link to="/newmerch" class="btn btn-primary">Новая запись</router-link>
+        <span>Number of records: {{ merchCount }}</span>
+        <router-link to="/merch/new" class="btn btn-primary">New record</router-link>
       </div>
     </div>
   </div>
