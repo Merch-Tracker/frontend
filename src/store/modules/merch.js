@@ -1,5 +1,4 @@
 import axios from "axios";
-import authAndToken from "@/store/modules/authAndToken.js";
 
 const getHeaders = (state) => {
     return {
@@ -34,8 +33,6 @@ const actions = {
         }
     },
 
-    async readOneMerch(){},
-
     async readAllMerch({ rootState, commit }) {
         if (!rootState.authAndToken.isAuth) {
             return;
@@ -60,6 +57,9 @@ const actions = {
 const getters = {
     readAllMerch: (state) => (state.merch ? state.merch : null),
     merchCount: (state) => (state.merch ? state.merch.length : 0),
+    getMerchByUuid: (state) => (uuid) => {
+        return state.merch ? state.merch.find(item => item.MerchUuid === uuid) : null
+    },
 };
 
 export default {
