@@ -7,15 +7,19 @@ const getHeaders = (state) => {
 };
 
 const state = {
-    merch: JSON.parse(localStorage.getItem("allMerch"))
-
+    merch: JSON.parse(localStorage.getItem("allMerch")) || [],
 };
 
 const mutations = {
     SET_MERCH(state, merch) {
         state.merch = merch;
         localStorage.setItem("allMerch", JSON.stringify(merch));
-    }
+    },
+
+    REMOVE_MERCH(state, merchUuid){
+        state.merch = state.merch.filter(item => item.MerchUuid !== merchUuid);
+        localStorage.setItem("allMerch", JSON.stringify(state.merch));
+    },
 };
 
 const actions = {
@@ -49,9 +53,34 @@ const actions = {
         }
     },
 
-    async updateMerch(){},
+    async updateMerch({ rootState }, {merch_uuid, payload}) {
+        if (!rootState.authAndToken.isAuth) {
+            return;
+        }
 
-    async deleteMerch(){},
+        try {
+            await axios.put(`/merch/${merch_uuid}`, payload, {headers: getHeaders(rootState)});
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+    },
+
+    async deleteMerch({ rootState, commit }, merch_uuid){
+        if (!rootState.authAndToken.isAuth) {
+            return;
+        }
+
+        try {
+            await axios.delete(`/merch/${merch_uuid}`, {headers: getHeaders(rootState)});
+            commit("REMOVE_MERCH", merch_uuid);
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+    },
 };
 
 const getters = {
@@ -69,9 +98,3 @@ export default {
     actions,
     getters,
 };
-
-// "POST /merch"
-// "GET /merch/"
-// "GET /merch/all"
-// "PUT /merch"
-// "DELETE /merch"
