@@ -13,7 +13,15 @@ export default {
     uuid: {
       type: String,
       required: true,
-    }
+    },
+    old_price: {
+      type: Number,
+      required: true,
+    },
+    new_price: {
+      type: Number,
+      required: true,
+    },
   },
 }
 </script>
@@ -25,7 +33,10 @@ export default {
     <div class="card-body">
       <p class="card-text">Name: <strong>{{ name }}</strong></p>
       <p class="card-text">Link: <strong>{{ link }}</strong></p>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text">
+        <span class="me-3">Price: <strong>{{ new_price }}</strong></span>
+        <span class="me-3">Old price: <strong>{{ old_price }}</strong></span>
+      </p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
           <button type="button" class="btn btn-sm btn-outline-secondary">View</button>

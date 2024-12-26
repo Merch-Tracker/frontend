@@ -24,7 +24,6 @@ export default {
   mounted() {
     this.getAllMerch();
   }
-
 }
 </script>
 
@@ -41,6 +40,8 @@ export default {
               :name="item.name"
               :link="item.link"
               :uuid="item.MerchUuid"
+              :new_price="item.new_price"
+              :old_price="item.old_price"
           />
         </router-link>
       </div>

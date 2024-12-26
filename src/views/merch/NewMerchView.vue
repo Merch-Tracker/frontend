@@ -1,5 +1,6 @@
 <script>
 import {mapActions} from "vuex";
+import router from "@/router/index.js";
 
 export default {
   name: "NewMerchView",
@@ -17,7 +18,8 @@ export default {
     ...mapActions("merch", ["newMerch"]),
     async submitNewMerch(){
       try {
-        await this.newMerch(this.newMerchData)
+        await this.newMerch(this.newMerchData);
+        await router.push({ name: "collection" });
       }
       catch(error){
         console.error(error);
@@ -35,7 +37,7 @@ export default {
       <form class="needs-validation" novalidate @submit.prevent="submitNewMerch">
         <div class="row g-3">
           <div class="col-12">
-            <label for="address" class="form-label">Record name</label>
+            <label for="name" class="form-label">Record name</label>
             <input type="text"
                    class="form-control"
                    id="name"
@@ -49,10 +51,10 @@ export default {
           </div>
 
           <div class="col-12">
-            <label for="address" class="form-label">Link</label>
+            <label for="link" class="form-label">Link</label>
             <input type="text"
                    class="form-control"
-                   id="address"
+                   id="link"
                    placeholder="Enter link name"
                    required
                    v-model="newMerchData.link"
