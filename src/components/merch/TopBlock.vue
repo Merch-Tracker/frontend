@@ -15,7 +15,7 @@ export default {
     <div class="card">
       <div class="card-body p-2 d-flex justify-content-between align-items-center">
         <span>Number of records: {{ merchCount }}</span>
-        <router-link to="/merch/new" class="btn btn-primary">New record</router-link>
+        <router-link :to="{ name: 'merchnew' }" class="btn btn-primary">New record</router-link>
       </div>
     </div>
   </div>
