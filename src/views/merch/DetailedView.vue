@@ -11,13 +11,17 @@ export default {
 
     details(){
       return this.$store.getters["merch/getMerchByUuid"](this.merchUuid);
-    }
+    },
   },
 
   data(){
     return {
       merchName : "",
       merchLink : "",
+      merchParseTag: "",
+      merchParseSubstring: "",
+      merchCookieValues: "",
+      merchSeparator: "",
       selectedFile: null,
       imageUrl: null,
     }
@@ -30,6 +34,10 @@ export default {
         if (newDetails) {
           this.merchName = newDetails.name;
           this.merchLink = newDetails.link;
+          this.merchParseTag = newDetails.parse_tag
+          this.merchParseSubstring = newDetails.parse_substring
+          this.merchCookieValues = newDetails.cookie_values
+          this.merchSeparator = newDetails.separator
         }
       }
     }
@@ -47,7 +55,7 @@ export default {
 
       try {
         await this.$store.dispatch("images/uploadImage", {merch_uuid: this.merchUuid, payload});
-        // await router.push({ name: "collection" });
+        await router.push({ name: "collection" });
       }
       catch(error){
         console.log(error);
@@ -58,6 +66,10 @@ export default {
       const payload = {
         name: this.merchName,
         link: this.merchLink,
+        parse_tag: this.merchParseTag,
+        parse_substring: this.merchParseSubstring,
+        cookie_values: this.merchCookieValues,
+        separator: this.merchSeparator,
       };
 
       try {
@@ -94,7 +106,7 @@ export default {
 
   beforeDestroy() {
     if (this.imageUrl) {
-      URL.revokeObjectURL(this.imageUrl);  // Освобождение URL при уничтожении компонента
+      URL.revokeObjectURL(this.imageUrl);
     }
   },
 }
@@ -102,14 +114,13 @@ export default {
 
 <template>
   <h1 class="text-center mt-3">Detailed information</h1>
-
     <div class="card mt-3 d-flex flex-column flex-md-row shadow-sm">
       <div class="card-body d-flex flex-column flex-md-row">
         <div class="d-flex flex-column align-items-center">
           <form method="POST" @submit.prevent="uploadImage">
             <div @click="openFileDialog" class="custom-hover-image">
               <img v-if="!selectedFile"
-                   src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'><rect width='100%' height='100%' fill='%23e0e0e0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23000000'>Click here to select image</text></svg>"
+                   src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='711' viewBox='0 0 400 711'><rect width='100%' height='100%' fill='%23e0e0e0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23000000'><tspan x='50%' dy='-1.2em'>Click here</tspan><tspan x='50%' dy='1.2em'>to select</tspan><tspan x='50%' dy='1.2em'>image</tspan></text></svg>"
                    class="card-img-top img-fluid w-auto mb-3 mb-md-0"
                    alt="Placeholder"
                    width="400"
@@ -118,7 +129,7 @@ export default {
                    class="card-img-top img-fluid w-auto mb-3 mb-md-0"
                    alt="Selected Image"
                    width="400"
-                   height="225">
+                   height="711">
             </div>
             <input
                 type="file"
@@ -130,9 +141,9 @@ export default {
           </form>
         </div>
 
-        <form method="POST" @submit.prevent="uploadImage">
+        <form method="POST" @submit.prevent="updateMerch">
           <div class="ms-md-3 row">
-            <h6 class="custom-small-text">ID: {{ details.MerchUuid }}</h6>
+          <h6 class="custom-small-text">ID: {{ details.MerchUuid }}</h6>
             <div class="mt-2 col-12">
               <label for="name" class="form-label">Merch name</label>
               <input type="text"
@@ -143,6 +154,7 @@ export default {
                      required
               >
             </div>
+
             <div class="mt-2 col-12">
               <label for="link" class="form-label">Merch link</label>
               <input type="text"
@@ -153,6 +165,48 @@ export default {
                      required
               >
             </div>
+
+            <div class="mt-2 col-12">
+              <label for="link" class="form-label">Parse tag</label>
+              <input type="text"
+                     class="form-control"
+                     id="parse_tag"
+                     v-model=merchParseTag
+                     placeholder="Enter parse tag here without <>"
+              >
+            </div>
+
+            <div class="mt-2 col-12">
+              <label for="link" class="form-label">Parse substring</label>
+              <input type="text"
+                     class="form-control"
+                     id="parseTag"
+                     v-model=merchParseSubstring
+                     placeholder="Enter parse substring here"
+              >
+            </div>
+
+            <div class="mt-2 col-12">
+              <label for="link" class="form-label">Cookie values</label>
+              <input type="text"
+                     class="form-control"
+                     id="parseTag"
+                     v-model=merchCookieValues
+                     placeholder="Enter cookie values here"
+              >
+            </div>
+
+            <div class="mt-2 col-12">
+              <label for="link" class="form-label">Separator</label>
+              <input type="text"
+                     class="form-control"
+                     id="parseTag"
+                     v-model=merchSeparator
+                     placeholder="Enter separator here"
+              >
+            </div>
+
+
             <div class="mt-2 col-12">
               <button class="btn btn-success w-100" type="submit">Update</button>
             </div>
