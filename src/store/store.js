@@ -13,7 +13,10 @@ export default new Vuex.Store({
                 commit("authAndToken/SET_AUTH", {isAuth: true, token});
 
                 const user = localStorage.getItem("user") || null;
-                commit("userData/SET_USER", user);
+                commit("userData/SET_USER", JSON.parse(user));
+
+                const allMerch = localStorage.getItem("allMerch") || null;
+                commit("merch/SET_MERCH", JSON.parse(allMerch));
             }
         }
     },
