@@ -1,8 +1,11 @@
 <script>
 import router from "@/router/index.js";
+import MerchCardLabelBlock from "@/components/labels/MerchCardLabelBlock.vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "DetailedView",
+  components: {MerchCardLabelBlock},
 
   computed: {
     merchUuid(){
@@ -120,16 +123,16 @@ export default {
           <form method="POST" @submit.prevent="uploadImage">
             <div @click="openFileDialog" class="custom-hover-image">
               <img v-if="!selectedFile"
-                   src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='711' viewBox='0 0 400 711'><rect width='100%' height='100%' fill='%23e0e0e0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23000000'><tspan x='50%' dy='-1.2em'>Click here</tspan><tspan x='50%' dy='1.2em'>to select</tspan><tspan x='50%' dy='1.2em'>image</tspan></text></svg>"
+                   src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='640' viewBox='0 0 400 640'><rect width='100%' height='100%' fill='%23e0e0e0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23000000'><tspan x='50%' dy='-1.2em'>Click here</tspan><tspan x='50%' dy='1.2em'>to select</tspan><tspan x='50%' dy='1.2em'>image</tspan></text></svg>"
                    class="card-img-top img-fluid w-auto mb-3 mb-md-0"
                    alt="Placeholder"
                    width="400"
-                   height="225">
+                   height="640">
               <img v-else :src="imageUrl"
                    class="card-img-top img-fluid w-auto mb-3 mb-md-0"
                    alt="Selected Image"
                    width="400"
-                   height="711">
+                   height="640">
             </div>
             <input
                 type="file"
@@ -220,6 +223,8 @@ export default {
       <div>Current price: <strong style="color: darkcyan">{{ details.new_price }}</strong></div>
       <div>Difference: <strong style="color: red">{{ details.new_price - details.old_price }}</strong></div>
   </div>
+  <MerchCardLabelBlock />
+
   <div class="card mt-3 shadow-sm p-3">
     <p class="card-text text-center">Added: {{ details.created_at }}</p>
     <p class="card-text text-center">Updated: {{ details.updated_at }}</p>

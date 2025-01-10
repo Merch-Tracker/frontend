@@ -1,9 +1,11 @@
 <script>
 import {mapGetters} from "vuex";
-import axios from "axios";
+import PersonalBlock from "@/components/labels/LabelsBlock.vue";
+import LabelTemplate from "@/components/labels/LabelTemplate.vue";
 
 export default {
   name: "PersonalView",
+  components: {LabelTemplate, LabelsBlock: PersonalBlock},
 
   computed:{
     ...mapGetters("userData", ["userName", "userEmail"]),
@@ -15,13 +17,12 @@ export default {
 
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <h3>Personal data</h3>
-      <ul>
-        <li>Username: {{ userName }}</li>
-        <li>Email: {{ userEmail }}</li>
-      </ul>
-    </div>
+    <h2 class="text-center">Personal data</h2>
+      <div class="card mt-2 p-2">
+        <h6> Username: {{ userName }}</h6>
+        <h6> Email: {{ userEmail }} </h6>
+      </div>
+    <LabelsBlock />
   </div>
 </template>
 

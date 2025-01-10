@@ -20,6 +20,26 @@ const mutations = {
         state.merch = state.merch.filter(item => item.MerchUuid !== merchUuid);
         localStorage.setItem("allMerch", JSON.stringify(state.merch));
     },
+
+    APPEND_LABEL(state, { merch_uuid, label_uuid }) {
+        const entry = state.merch.find(item => item.MerchUuid === merch_uuid);
+        if (!entry.labels) {
+            entry.labels = [];
+        }
+
+        if (entry) {
+            if (!entry.labels.includes(label_uuid)) {
+                entry.labels.push(label_uuid);
+            }
+        }
+    },
+
+    REMOVE_LABEL(state, { merch_uuid, label_uuid }) {
+        const entry = state.merch.find(item => item.MerchUuid === merch_uuid);
+        if (entry) {
+            entry.labels = entry.labels.filter(label => label !== label_uuid);
+        }
+    },
 };
 
 const actions = {
@@ -89,6 +109,18 @@ const getters = {
     getMerchByUuid: (state) => (uuid) => {
         return state.merch ? state.merch.find(item => item.MerchUuid === uuid) : null
     },
+
+    getFilteredMerch: (state, getters, rootState) => {
+        const merchFilters = rootState.viewFilter.merchFilters;
+        if (!merchFilters) {
+            return state.merch;
+        }
+
+        return state.merch.filter(item =>
+            item.labels && item.labels.includes(merchFilters)
+        );
+    },
+
 };
 
 export default {

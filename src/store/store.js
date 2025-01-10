@@ -3,11 +3,13 @@ import authAndToken from "@/store/modules/authAndToken.js";
 import userData from "@/store/modules/userData.js";
 import merch from "@/store/modules/merch.js";
 import images from "@/store/modules/images.js";
+import labels from "@/store/modules/labels.js";
+import viewFilter from "@/store/modules/viewFilter.js";
 
 
 export default new Vuex.Store({
     actions: {
-        async initStore({ commit }) {
+        async initStore({ commit, dispatch }) {
             if (localStorage.getItem("isAuth")){
                 const token = localStorage.getItem("token") || null;
                 commit("authAndToken/SET_AUTH", {isAuth: true, token});
@@ -17,6 +19,8 @@ export default new Vuex.Store({
 
                 const allMerch = localStorage.getItem("allMerch") || null;
                 commit("merch/SET_MERCH", JSON.parse(allMerch));
+
+                await dispatch("labels/getLabels");
             }
         }
     },
@@ -25,5 +29,7 @@ export default new Vuex.Store({
         userData,
         merch,
         images,
+        labels,
+        viewFilter,
     },
 });
