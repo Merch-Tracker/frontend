@@ -1,11 +1,12 @@
 <script>
 import router from "@/router/index.js";
 import MerchCardLabelBlock from "@/components/labels/MerchCardLabelBlock.vue";
-import {mapGetters} from "vuex";
+import PriceHistoryBlock from "@/components/merch/PriceHistoryBlock.vue";
+import CurrentPricesBlock from "@/components/merch/CurrentPricesBlock.vue";
 
 export default {
   name: "DetailedView",
-  components: {MerchCardLabelBlock},
+  components: {CurrentPricesBlock, PriceHistoryBlock, MerchCardLabelBlock},
 
   computed: {
     merchUuid(){
@@ -218,12 +219,9 @@ export default {
       </div>
     </div>
 
-  <div class="card mt-3 d-flex flex-md-row shadow-sm justify-content-around p-3">
-      <div>Old price: <strong style="color: darkorange">{{ details.old_price }}</strong></div>
-      <div>Current price: <strong style="color: darkcyan">{{ details.new_price }}</strong></div>
-      <div>Difference: <strong style="color: red">{{ details.new_price - details.old_price }}</strong></div>
-  </div>
+  <CurrentPricesBlock :details="details" />
   <MerchCardLabelBlock />
+  <PriceHistoryBlock :merchUuid="details.MerchUuid" />
 
   <div class="card mt-3 shadow-sm p-3">
     <p class="card-text text-center">Added: {{ details.created_at }}</p>

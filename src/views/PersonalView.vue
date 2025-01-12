@@ -2,10 +2,11 @@
 import {mapGetters} from "vuex";
 import PersonalBlock from "@/components/labels/LabelsBlock.vue";
 import LabelTemplate from "@/components/labels/LabelTemplate.vue";
+import PriceHistoryBlock from "@/components/merch/PriceHistoryBlock.vue";
 
 export default {
   name: "PersonalView",
-  components: {LabelTemplate, LabelsBlock: PersonalBlock},
+  components: {PriceHistoryBlock, LabelTemplate, LabelsBlock: PersonalBlock},
 
   computed:{
     ...mapGetters("userData", ["userName", "userEmail"]),

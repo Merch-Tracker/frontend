@@ -5,6 +5,7 @@ import merch from "@/store/modules/merch.js";
 import images from "@/store/modules/images.js";
 import labels from "@/store/modules/labels.js";
 import viewFilter from "@/store/modules/viewFilter.js";
+import pricesHistory from "@/store/modules/pricesHistory.js";
 
 
 export default new Vuex.Store({
@@ -31,5 +32,6 @@ export default new Vuex.Store({
         images,
         labels,
         viewFilter,
+        pricesHistory,
     },
 });
