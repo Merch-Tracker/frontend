@@ -8,10 +8,10 @@ import NewMerchView from "@/views/merch/NewMerchView.vue";
 import DetailedView from "@/views/merch/DetailedView.vue";
 import SuccessView from "@/views/register/SuccessView.vue";
 import EditLabel from "@/components/labels/EditLabel.vue";
+import store from "@/store/store.js";
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
+
+const routes = [
     {
       path: "/",
       name: "home",
@@ -31,21 +31,26 @@ const router = createRouter({
       path: "/personal",
       name: "personal",
       component: PersonalView,
+      meta: { requiresAuth: true },
+
     },
     {
       path: "/merch/collection",
       name: "collection",
       component: CollectionView,
+      meta: { requiresAuth: true },
     },
     {
       path: "/merch/new",
       name: "merchnew",
       component: NewMerchView,
+      meta: { requiresAuth: true },
     },
     {
       path: "/merch/:id",
       name: "merchdetail",
       component: DetailedView,
+      meta: { requiresAuth: true },
     },
     {
       path: "/register_success",
@@ -56,8 +61,19 @@ const router = createRouter({
       path: "/editlabel/:id",
       name: "edit_label",
       component: EditLabel,
+      meta: { requiresAuth: true },
     },
-  ],
+  ];
+
+const router = createRouter({history: createWebHistory(import.meta.env.BASE_URL), routes});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters["authAndToken/isAuth"];
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    next ({ name: "login" });
+  } else {
+    next();
+  }
 });
 
 export default router;

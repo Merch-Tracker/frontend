@@ -28,7 +28,7 @@ export default {
       try {
         await this.login(credentials);
         await this.getUserData();
-        this.$router.push("/merch/collection");
+        this.$router.push({ name : 'collection' });
       }
       catch (error) {
         console.error(error);
@@ -64,7 +64,7 @@ export default {
           </div>
 
           <button class="btn btn-primary w-100 py-2 mt-2" type="submit">Sign in</button>
-          <p class="mt-5 mb-3 text-body-secondary">2024</p>
+          <p class="mt-5 mb-3 text-body-secondary text-center">2024 - 2025</p>
         </form>
       </div>
     </div>
