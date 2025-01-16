@@ -1,6 +1,5 @@
 <script>
-import {mapGetters, mapState} from "vuex";
-import axios from "axios";
+import {mapGetters} from "vuex";
 import LabelTemplate from "@/components/labels/LabelTemplate.vue";
 
 export default {
@@ -105,5 +104,3 @@ export default {
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 </style>
-
-<!--"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='640' viewBox='0 0 400 640'><rect width='100%' height='100%' fill='%23e0e0e0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23000000'>Image placeholder</text></svg>"-->
