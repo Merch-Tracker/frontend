@@ -41,37 +41,17 @@ export default {
 
   computed: {
     ...mapGetters("authAndToken", ["token"]),
-    ...mapGetters("labels", ["getUserLabels"])
+    ...mapGetters("labels", ["getUserLabels"]),
   },
 
   mounted() {
-    this.fetchImage();
+    this.getImage();
     this.makeLabels();
   },
 
   methods: {
-    async fetchImage() {
-      try {
-        const response = await axios.get(`/images/${this.uuid}`, {
-          headers: this.getHeaders(this.rootState),
-          responseType: 'blob',
-        });
-
-        if (response.status === 200) {
-          this.image = URL.createObjectURL(response.data);
-        } else if (response.status === 204) {
-          this.image = null;
-        }
-
-      } catch (error) {
-        console.error('Error fetching image:', error);
-      }
-    },
-
-    getHeaders() {
-      return {
-        Authorization: `Bearer ${this.token}`,
-      };
+    async getImage() {
+      this.image = await this.$store.dispatch("images/fetchImage", this.uuid)
     },
 
     makeLabels(){
@@ -87,18 +67,18 @@ export default {
 <template>
   <router-link :to="{ name: 'merchdetail', params: { id: uuid } }" class="custom-no-underline">
     <div class="col">
-      <div class="card shadow-sm mx-auto">
+      <div class="card shadow-sm p-0" style="max-width: 400px;">
         <div class="d-flex justify-content-center">
         <img v-if="image"
              :src="image"
-             class="card-img-top"
-             style="max-width: 400px; height: auto;"
+             class="card-img-top w-100"
+             style="height: auto;"
              alt="Placeholder">
 
         <img v-else
              src=""
-             class="card-img-top"
-             style="max-width: 400px; height: auto;"
+             class="card-img-top w-100"
+             style="height: auto;"
              alt="Placeholder">
         </div>
 
