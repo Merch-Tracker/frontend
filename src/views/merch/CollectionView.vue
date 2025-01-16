@@ -39,7 +39,7 @@ export default {
   <div class="container mt-1">
   <h1 class="text-center">Your collection, master {{ userName }}</h1>
     <div class="row row-cols-auto row-cols-sm-auto row-cols-lg-auto justify-content-between align-items-stretch">
-      <div v-for="item in merchList" :key="item">
+      <div v-for="item in merchList" :key="item" class="mt-2">
         <MerchCard
             :name="item.name"
             :link="item.link"
