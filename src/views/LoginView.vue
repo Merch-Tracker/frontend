@@ -36,12 +36,11 @@ export default {
           await this.getLabels();
 
           this.$router.push({ name : 'collection' });
-        } else {
-          this.loginFailed = true;
         }
       }
 
       catch (error) {
+        this.loginFailed = true;
         if (error.response.status === 400) {
           console.error("Login failed with status code: " + error.response.status);
         } else {
@@ -68,7 +67,7 @@ export default {
         <form id="login_form" @submit.prevent="handleLogin">
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-          <div v-if="this.loginFailed" class="form-group text-danger">Login failed. Wrong email or password</div>
+          <div v-if="loginFailed" class="form-group text-danger">Login failed. Wrong email or password</div>
 
           <div class="form-floating mt-2">
             <input v-model="email" type="text" class="form-control" id="floatingInput" placeholder="username" required />
