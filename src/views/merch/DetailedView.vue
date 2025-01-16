@@ -21,6 +21,7 @@ export default {
 
   data(){
     return {
+      allowDelete: false,
       merchName : "",
       merchLink : "",
       merchParseTag: "",
@@ -64,6 +65,10 @@ export default {
       catch(error){
         console.log(error);
       }
+    },
+
+    toggleCheck(){
+      this.allowDelete = !!this.allowDelete
     },
 
     async deleteMerch(){
@@ -169,8 +174,12 @@ export default {
     <p class="card-text text-center">Updated: {{ details.updated_at }}</p>
     <p class="card-text text-center">Placeholder for some other information</p>
   </div>
-  <div class="mt-5 d-flex justify-content-center">
-    <button class="btn w-75 btn-danger btn-lg" @click="deleteMerch">Delete</button>
+  <div class="mt-5 d-flex justify-content-center align-items-center">
+    <input type="checkbox" id="del" class="form-check-input" v-model="allowDelete" @change="toggleCheck">
+    <label for="del" class="form-check-label ms-2">Check to allow delete</label>
+  </div>
+  <div class="mt-3 d-flex justify-content-center">
+    <button class="btn w-75 btn-danger btn-lg" :disabled="!allowDelete" @click="deleteMerch">Delete</button>
   </div>
 </template>
 
