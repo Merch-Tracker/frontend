@@ -23,7 +23,29 @@ const actions = {
         catch (error) {
             console.log(error);
         }
-    }
+    },
+
+    async fetchImage({ rootState }, merch_uuid) {
+        if (!rootState.authAndToken.isAuth) {
+            return;
+        }
+
+        try {
+            const response = await axios.get(`/images/${merch_uuid}`, {
+                headers: getHeaders(rootState),
+                responseType: 'blob',
+            });
+
+            if (response.status === 200) {
+                return URL.createObjectURL(response.data);
+            } else if (response.status === 204) {
+                return null;
+            }
+
+        } catch (error) {
+            console.error('Error fetching image:', error);
+        }
+    },
 }
 
 export default {
