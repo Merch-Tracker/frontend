@@ -3,10 +3,11 @@ import router from "@/router/index.js";
 import MerchCardLabelBlock from "@/components/labels/MerchCardLabelBlock.vue";
 import PriceHistoryBlock from "@/components/merch/PriceHistoryBlock.vue";
 import CurrentPricesBlock from "@/components/merch/CurrentPricesBlock.vue";
+import ImageUploadBlock from "@/components/merch/ImageUploadBlock.vue";
 
 export default {
   name: "DetailedView",
-  components: {CurrentPricesBlock, PriceHistoryBlock, MerchCardLabelBlock},
+  components: {ImageUploadBlock, CurrentPricesBlock, PriceHistoryBlock, MerchCardLabelBlock},
 
   computed: {
     merchUuid(){
@@ -26,8 +27,6 @@ export default {
       merchParseSubstring: "",
       merchCookieValues: "",
       merchSeparator: "",
-      selectedFile: null,
-      imageUrl: null,
     }
   },
 
@@ -48,24 +47,6 @@ export default {
   },
 
   methods: {
-    async uploadImage(){
-      if (!this.selectedFile) {
-        alert("Click on image first to select image file. Then hit upload.");
-        return;
-      }
-
-      const payload = new FormData();
-      payload.append("Data", this.selectedFile);
-
-      try {
-        await this.$store.dispatch("images/uploadImage", {merch_uuid: this.merchUuid, payload});
-        await router.push({ name: "collection" });
-      }
-      catch(error){
-        console.log(error);
-      }
-    },
-
     async updateMerch(){
       const payload = {
         name: this.merchName,
@@ -95,23 +76,6 @@ export default {
         console.log(error);
       }
     },
-
-    openFileDialog() {
-      this.$refs.fileInput.click();
-    },
-
-    handleFileChange(event) {
-      this.selectedFile = event.target.files[0];
-      if (this.selectedFile) {
-        this.imageUrl = URL.createObjectURL(this.selectedFile);
-      }
-    },
-  },
-
-  beforeDestroy() {
-    if (this.imageUrl) {
-      URL.revokeObjectURL(this.imageUrl);
-    }
   },
 }
 </script>
@@ -120,30 +84,7 @@ export default {
   <h1 class="text-center mt-3">Detailed information</h1>
     <div class="card mt-3 d-flex flex-column flex-md-row shadow-sm">
       <div class="card-body d-flex flex-column flex-md-row">
-        <div class="d-flex flex-column align-items-center">
-          <form method="POST" @submit.prevent="uploadImage">
-            <div @click="openFileDialog" class="custom-hover-image">
-              <img v-if="!selectedFile"
-                   src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='640' viewBox='0 0 400 640'><rect width='100%' height='100%' fill='%23e0e0e0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='20' fill='%23000000'><tspan x='50%' dy='-1.2em'>Click here</tspan><tspan x='50%' dy='1.2em'>to select</tspan><tspan x='50%' dy='1.2em'>image</tspan></text></svg>"
-                   class="card-img-top img-fluid w-auto mb-3 mb-md-0"
-                   alt="Placeholder"
-                   width="400"
-                   height="640">
-              <img v-else :src="imageUrl"
-                   class="card-img-top img-fluid w-auto mb-3 mb-md-0"
-                   alt="Selected Image"
-                   width="400"
-                   height="640">
-            </div>
-            <input
-                type="file"
-                ref="fileInput"
-                @change="handleFileChange"
-                style="display: none"
-            />
-            <button class="btn btn-secondary mt-2 mb-3 w-100" type="submit">Upload</button>
-          </form>
-        </div>
+        <ImageUploadBlock :merchUuid="merchUuid" />
 
         <form method="POST" @submit.prevent="updateMerch">
           <div class="ms-md-3 row">
