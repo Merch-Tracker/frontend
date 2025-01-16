@@ -8,6 +8,7 @@ export default {
     return {
       email: "",
       password: "",
+      loginFailed: false,
     };
   },
 
@@ -18,6 +19,7 @@ export default {
   methods:{
     ...mapActions("userData", ["getUserData"]),
     ...mapActions("authAndToken", ["login"]),
+    ...mapActions("labels", ["getLabels"]),
 
     async handleLogin() {
       const credentials = {
@@ -26,12 +28,25 @@ export default {
       };
 
       try {
-        await this.login(credentials);
-        await this.getUserData();
-        this.$router.push({ name : 'collection' });
+        this.loginFailed = false;
+        const response = await this.login(credentials);
+
+        if (response.status === 200) {
+          await this.getUserData();
+          await this.getLabels();
+
+          this.$router.push({ name : 'collection' });
+        } else {
+          this.loginFailed = true;
+        }
       }
+
       catch (error) {
-        console.error(error);
+        if (error.response.status === 400) {
+          console.error("Login failed with status code: " + error.response.status);
+        } else {
+          console.error(error);
+        }
       }
     },
   },
@@ -52,6 +67,8 @@ export default {
       <div class="col-4 m-3">
         <form id="login_form" @submit.prevent="handleLogin">
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+          <div v-if="this.loginFailed" class="form-group text-danger">Login failed. Wrong email or password</div>
 
           <div class="form-floating mt-2">
             <input v-model="email" type="text" class="form-control" id="floatingInput" placeholder="username" required />

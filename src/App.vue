@@ -12,11 +12,8 @@ export default defineComponent({
 
   created() {
     this.$store.dispatch("initStore")
-    this.getUserData()
   },
 })
-
-
 </script>
 
 <template>

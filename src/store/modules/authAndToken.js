@@ -32,8 +32,10 @@ const actions = {
             const response = await axios.post("/login", credentials);
             const { token } = response.data;
             commit("SET_AUTH", { isAuth: true, token });
+            return response;
         } catch (error) {
-            console.log("Login error", error);
+            console.log("Login error");
+            // console.log(error);
         }
     },
     async logout({ commit }) {
