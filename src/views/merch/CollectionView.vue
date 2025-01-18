@@ -38,7 +38,7 @@ export default {
   </div>
   <div class="container mt-1">
   <h1 class="text-center">Your collection, master {{ userName }}</h1>
-    <div class="row row-cols-auto row-cols-sm-auto row-cols-lg-auto justify-content-between align-items-stretch">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-start align-items-stretch">
       <div v-for="item in merchList" :key="item" class="mt-2">
         <MerchCard
             :name="item.name"
@@ -51,13 +51,8 @@ export default {
       </div>
     </div>
   </div>
-
-
 </template>
 
 <style scoped>
-.custom-no-underline{
-  text-decoration: none;
-  color: inherit;
-}
+
 </style>
