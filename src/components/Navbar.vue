@@ -37,6 +37,10 @@ export default {
           <li class="nav-item">
             <router-link :to="{ name : 'collection' }" class="nav-link active">Collection</router-link>
           </li>
+
+          <li class="nav-item">
+            <router-link :to="{ name : 'charts' }" class="nav-link active">Charts</router-link>
+          </li>
         </ul>
 
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0"  v-if="!isAuth">

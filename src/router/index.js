@@ -9,6 +9,7 @@ import DetailedView from "@/views/merch/DetailedView.vue";
 import SuccessView from "@/views/register/SuccessView.vue";
 import EditLabel from "@/components/labels/EditLabel.vue";
 import store from "@/store/store.js";
+import ChartsView from "@/views/ChartsView.vue";
 
 
 const routes = [
@@ -62,6 +63,12 @@ const routes = [
       name: "edit_label",
       component: EditLabel,
       meta: { requiresAuth: true },
+    },
+    {
+        path:"/merch/charts",
+        name: "charts",
+        component: ChartsView,
+        meta: { requiresAuth: true },
     },
   ];
 
