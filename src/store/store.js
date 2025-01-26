@@ -7,6 +7,7 @@ import labels from "@/store/modules/labels.js";
 import viewFilter from "@/store/modules/viewFilter.js";
 import pricesHistory from "@/store/modules/pricesHistory.js";
 import charts from "@/store/modules/charts.js";
+import notifications from "@/store/modules/notifications.js";
 
 
 export default new Vuex.Store({
@@ -35,5 +36,6 @@ export default new Vuex.Store({
         viewFilter,
         pricesHistory,
         charts,
+        notifications,
     },
 });

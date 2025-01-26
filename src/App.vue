@@ -14,6 +14,18 @@ export default defineComponent({
   created() {
     this.$store.dispatch("initStore")
   },
+
+  mounted(){
+    this.$store.dispatch("notifications/getNotifications");
+
+    this.interval = setInterval(() => {
+      this.$store.dispatch("notifications/getNotifications");
+    }, 5000)
+  },
+
+  beforeDestroy () {
+    clearInterval(this.interval);
+  },
 })
 </script>
 
@@ -29,3 +41,5 @@ export default defineComponent({
 
 <style>
 </style>
+
+

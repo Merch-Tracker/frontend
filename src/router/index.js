@@ -10,6 +10,7 @@ import SuccessView from "@/views/register/SuccessView.vue";
 import EditLabel from "@/components/labels/EditLabel.vue";
 import store from "@/store/store.js";
 import ChartsView from "@/views/ChartsView.vue";
+import NotificationsView from "@/views/NotificationsView.vue";
 
 
 const routes = [
@@ -68,6 +69,12 @@ const routes = [
         path:"/merch/charts",
         name: "charts",
         component: ChartsView,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/notifications",
+        name: "notifications",
+        component: NotificationsView,
         meta: { requiresAuth: true },
     },
   ];

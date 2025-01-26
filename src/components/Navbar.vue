@@ -1,8 +1,10 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
+import Notifications from "@/components/navbar/Notifications.vue";
 
 export default {
   name: "Navbar",
+  components: {Notifications},
 
   computed:{
     ...mapGetters("authAndToken", ["isAuth"]),
@@ -40,6 +42,12 @@ export default {
 
           <li class="nav-item">
             <router-link :to="{ name : 'charts' }" class="nav-link active">Charts</router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link :to="{ name : 'notifications' }" class="nav-link active">
+              <Notifications />
+            </router-link>
           </li>
         </ul>
 
