@@ -26,8 +26,13 @@ export default {
     },
   },
 
-  mounted() {
-    this.getAllMerch();
+  // mounted() {
+  //   this.getAllMerch();
+  // }
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.getAllMerch();
+    });
   }
 }
 </script>
@@ -40,14 +45,7 @@ export default {
   <h1 class="text-center">Your collection, master {{ userName }}</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-start align-items-stretch">
       <div v-for="item in merchList" :key="item" class="mt-2">
-        <MerchCard
-            :name="item.name"
-            :link="item.link"
-            :uuid="item.MerchUuid"
-            :new_price="item.new_price"
-            :old_price="item.old_price"
-            :labels="item.labels"
-        />
+        <MerchCard :attrs="item" />
       </div>
     </div>
   </div>

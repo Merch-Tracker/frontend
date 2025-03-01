@@ -45,6 +45,10 @@ export default {
           </li>
 
           <li class="nav-item">
+            <router-link :to="{ name : 'parsers' }" class="nav-link active">Parsers</router-link>
+          </li>
+
+          <li class="nav-item">
             <router-link :to="{ name : 'notifications' }" class="nav-link active">
               <Notifications />
             </router-link>

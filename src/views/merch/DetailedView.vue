@@ -4,10 +4,14 @@ import MerchCardLabelBlock from "@/components/labels/MerchCardLabelBlock.vue";
 import PriceHistoryBlock from "@/components/merch/PriceHistoryBlock.vue";
 import CurrentPricesBlock from "@/components/merch/CurrentPricesBlock.vue";
 import ImageUploadBlock from "@/components/merch/ImageUploadBlock.vue";
+import DetailedOriginSurugaya from "@/components/merch/DetailedOriginSurugaya.vue";
+import DetailedOriginMandarake from "@/components/merch/DetailedOriginMandarake.vue";
 
 export default {
   name: "DetailedView",
-  components: {ImageUploadBlock, CurrentPricesBlock, PriceHistoryBlock, MerchCardLabelBlock},
+  components: {
+    DetailedOriginMandarake,
+    DetailedOriginSurugaya, ImageUploadBlock, CurrentPricesBlock, PriceHistoryBlock, MerchCardLabelBlock},
 
   computed: {
     merchUuid(){
@@ -21,45 +25,32 @@ export default {
 
   data(){
     return {
-      allowDelete: false,
-      merchName : "",
-      merchLink : "",
-      merchParseTag: "",
-      merchParseSubstring: "",
-      merchCookieValues: "",
-      merchSeparator: "",
-    }
-  },
+      merchInfo: {
+        merch: {
+          name: "",
+          origin: "",
+          merch_uuid: "",
+        },
+        data: {}
+      },
 
-  watch: {
-    details: {
-      immediate: true,
-      handler(newDetails) {
-        if (newDetails) {
-          this.merchName = newDetails.name;
-          this.merchLink = newDetails.link;
-          this.merchParseTag = newDetails.parse_tag
-          this.merchParseSubstring = newDetails.parse_substring
-          this.merchCookieValues = newDetails.cookie_values
-          this.merchSeparator = newDetails.separator
-        }
-      }
+      allowDelete: false,
     }
   },
 
   methods: {
     async updateMerch(){
       const payload = {
-        name: this.merchName,
-        link: this.merchLink,
-        parse_tag: this.merchParseTag,
-        parse_substring: this.merchParseSubstring,
-        cookie_values: this.merchCookieValues,
-        separator: this.merchSeparator,
+        merch: {
+          name: this.details.merch.name,
+          origin: this.details.merch.origin,
+          merch_uuid: this.details.merch.merch_uuid,
+        },
+        data: this.merchInfo.data,
       };
 
       try {
-        await this.$store.dispatch("merch/updateMerch", {merch_uuid: this.merchUuid, payload});
+        await this.$store.dispatch("merch/updateMerch", payload);
         await router.push({ name: "collection" });
       }
       catch(error){
@@ -72,8 +63,15 @@ export default {
     },
 
     async deleteMerch(){
+      const payload = {
+        merch: {
+          origin: this.details.merch.origin,
+          merch_uuid: this.details.merch.merch_uuid,
+        }
+      }
+
       try {
-        await this.$store.dispatch("merch/deleteMerch", this.merchUuid);
+        await this.$store.dispatch("merch/deleteMerch", payload);
         await router.push({ name: "collection" });
       }
 
@@ -81,98 +79,56 @@ export default {
         console.log(error);
       }
     },
+
+    updateNewMerch(updatedValue){
+      this.merchInfo = updatedValue;
+    }
   },
 }
 </script>
 
 <template>
   <h1 class="text-center mt-3">Detailed information</h1>
-    <div class="card mt-3 d-flex flex-column flex-md-row shadow-sm">
-      <div class="card-body d-flex flex-column flex-md-row">
-        <ImageUploadBlock :merchUuid="merchUuid" />
+  <div class="card mt-3 shadow-sm">
+    <div class="card-body">
+      <form method="POST" @submit.prevent="updateMerch" class="row">
+        <div class="col-md-3">
+          <ImageUploadBlock :merchUuid="merchUuid" />
+        </div>
 
-        <form method="POST" @submit.prevent="updateMerch">
-          <div class="ms-md-3 row">
-          <h6 class="custom-small-text">ID: {{ details.MerchUuid }}</h6>
-            <div class="mt-2 col-12">
-              <label for="name" class="form-label">Merch name</label>
-              <input type="text"
-                     class="form-control"
-                     id="name"
-                     v-model=merchName
-                     placeholder="Enter merch name"
-                     required
-              >
-            </div>
+        <div class="col-md-9">
+<!--          temp block-->
+          <div class="mb-3"><a :href="`https://order.mandarake.co.jp/order/listPage/list?soldOut=1&keyword=${this.merchInfo.merch.name}`" target="_blank" @click.stop>View on mandarake</a></div>
 
-            <div class="mt-2 col-12">
-              <label for="link" class="form-label">Merch link</label>
-              <input type="text"
-                     class="form-control"
-                     id="link"
-                     v-model=merchLink
-                     placeholder="Enter url here"
-                     required
-              >
-            </div>
-
-            <div class="mt-2 col-12">
-              <label for="link" class="form-label">Parse tag</label>
-              <input type="text"
-                     class="form-control"
-                     id="parse_tag"
-                     v-model=merchParseTag
-                     placeholder="Enter parse tag here without <>"
-              >
-            </div>
-
-            <div class="mt-2 col-12">
-              <label for="link" class="form-label">Parse substring</label>
-              <input type="text"
-                     class="form-control"
-                     id="parseTag"
-                     v-model=merchParseSubstring
-                     placeholder="Enter parse substring here"
-              >
-            </div>
-
-            <div class="mt-2 col-12">
-              <label for="link" class="form-label">Cookie values</label>
-              <input type="text"
-                     class="form-control"
-                     id="parseTag"
-                     v-model=merchCookieValues
-                     placeholder="Enter cookie values here"
-              >
-            </div>
-
-            <div class="mt-2 col-12">
-              <label for="link" class="form-label">Separator</label>
-              <input type="text"
-                     class="form-control"
-                     id="parseTag"
-                     v-model=merchSeparator
-                     placeholder="Enter separator here"
-              >
-            </div>
-
-
-            <div class="mt-2 col-12">
-              <button class="btn btn-success w-100" type="submit">Update</button>
-            </div>
+          <div v-if="details.merch.origin === 'surugaya'">
+            <DetailedOriginSurugaya
+                :details="details"
+                @input="updateNewMerch"
+            />
           </div>
-        </form>
-      </div>
-    </div>
 
-  <CurrentPricesBlock :details="details" />
+          <div v-else-if="details.merch.origin === 'mandarake'">
+            <DetailedOriginMandarake
+                :details="details"
+                @input="updateNewMerch"
+            />
+          </div>
+
+          <div class="mt-2">
+            <button class="btn btn-success w-100" type="submit" @click.prevent="updateMerch">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <CurrentPricesBlock :details="details.prices" />
   <MerchCardLabelBlock />
-  <PriceHistoryBlock :merchUuid="details.MerchUuid" />
+  <PriceHistoryBlock :merchUuid="details.merch.merch_uuid" />
 
   <div class="card mt-3 shadow-sm p-3">
-    <p class="card-text text-center">Added: {{ details.created_at }}</p>
-    <p class="card-text text-center">Updated: {{ details.updated_at }}</p>
-    <p class="card-text text-center">Placeholder for some other information</p>
+    <p class="card-text text-center">Added: {{ details.merch.created_at }}</p>
+    <p class="card-text text-center">Updated: {{ details.merch.updated_at }}</p>
   </div>
   <div class="mt-5 d-flex justify-content-center align-items-center">
     <input type="checkbox" id="del" class="form-check-input" v-model="allowDelete" @change="toggleCheck">

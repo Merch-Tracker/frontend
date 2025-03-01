@@ -7,27 +7,23 @@ const getHeaders = (state) => {
 };
 
 const actions = {
-    async getPricesHistory({ rootState }, {merchUuid, count}){
+    async getServiceStatus({ rootState }){
         if (!rootState.authAndToken.isAuth) {
             return;
         }
 
         try {
-            const response = await axios.get(`/prices/${merchUuid}`,
-                {
-                    headers: getHeaders(rootState),
-                    params: { count: count }
-                });
+            const response = await axios.get(`/status/parser`, {headers: getHeaders(rootState)});
             if (response.status === 200) {
                 return response.data;
             } else {
-                return [];
+                return null;
             }
         }
 
         catch (error) {
             console.log(error);
-            return [];
+            return null;
         }
     }
 }

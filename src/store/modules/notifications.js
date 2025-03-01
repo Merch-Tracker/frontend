@@ -37,6 +37,7 @@ const actions = {
             commit('SET_NOTIFICATIONS', response.data);
             return response.data;
         }
+        // return null
     },
 
     async markAsSeen({ commit }, note) {

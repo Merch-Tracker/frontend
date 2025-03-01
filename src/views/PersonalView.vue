@@ -11,8 +11,6 @@ export default {
   computed:{
     ...mapGetters("userData", ["userName", "userEmail"]),
   },
-
-
 }
 </script>
 

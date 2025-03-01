@@ -11,6 +11,7 @@ import EditLabel from "@/components/labels/EditLabel.vue";
 import store from "@/store/store.js";
 import ChartsView from "@/views/ChartsView.vue";
 import NotificationsView from "@/views/NotificationsView.vue";
+import ParsersView from "@/views/ParsersView.vue";
 
 
 const routes = [
@@ -75,6 +76,12 @@ const routes = [
         path: "/notifications",
         name: "notifications",
         component: NotificationsView,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/parsers",
+        name: "parsers",
+        component: ParsersView,
         meta: { requiresAuth: true },
     },
   ];

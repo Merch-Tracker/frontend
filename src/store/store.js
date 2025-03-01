@@ -8,6 +8,7 @@ import viewFilter from "@/store/modules/viewFilter.js";
 import pricesHistory from "@/store/modules/pricesHistory.js";
 import charts from "@/store/modules/charts.js";
 import notifications from "@/store/modules/notifications.js";
+import serviceStatus from "@/store/modules/serviceStatus.js";
 
 
 export default new Vuex.Store({
@@ -37,5 +38,6 @@ export default new Vuex.Store({
         pricesHistory,
         charts,
         notifications,
+        serviceStatus,
     },
 });

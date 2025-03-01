@@ -6,28 +6,9 @@ export default {
   name: "MerchCard",
   components: {LabelTemplate},
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    link: {
-      type: String,
-      required: true,
-    },
-    uuid: {
-      type: String,
-      required: true,
-    },
-    old_price: {
-      type: Number,
-      required: true,
-    },
-    new_price: {
-      type: Number,
-      required: true,
-    },
-    labels: {
-      type: Array,
+    attrs: {
+      type: Object,
+      required: false,
     },
   },
 
@@ -50,7 +31,7 @@ export default {
 
   methods: {
     async getImage() {
-      this.image = await this.$store.dispatch("images/fetchImage", this.uuid)
+      this.image = await this.$store.dispatch("images/fetchImage", this.attrs.merch.merch_uuid)
     },
 
     makeLabels(){
@@ -64,7 +45,7 @@ export default {
 </script>
 
 <template>
-  <router-link :to="{ name: 'merchdetail', params: { id: uuid } }" class="custom-no-underline">
+  <router-link :to="{ name: 'merchdetail', params: { id: attrs.merch.merch_uuid } }" class="custom-no-underline">
     <div class="card shadow" style="aspect-ratio: 4/7">
       <div class="d-flex justify-content-center">
         <img v-if="image"
@@ -79,17 +60,22 @@ export default {
       </div>
 
       <div class="p-3 d-flex flex-column">
-        <p class="card-text">Name: <strong>{{ name }}</strong></p>
-        <p class="card-text"><a :href="link" target="_blank" @click.stop>View on site</a></p>
+        <p class="card-text">Name: <strong>{{ attrs.merch.name }}</strong></p>
+        <p class="card-text"><a :href="attrs.data.link" target="_blank" @click.stop>View on site</a></p>
         <p class="card-text">
-          <span class="me-3">Price: <strong>{{ new_price }}</strong></span>
-          <span class="me-3">Old price: <strong>{{ old_price }}</strong></span>
+          <span class="me-3">Price: <strong>{{ attrs.prices[0] }}</strong></span>
+          <span class="me-3">Old price: <strong>{{ attrs.prices[1] }}</strong></span>
         </p>
+        <div><a :href="`https://order.mandarake.co.jp/order/listPage/list?soldOut=1&keyword=${attrs.merch.name}`" target="_blank" @click.stop>View on mandarake</a></div>
         <div class="d-flex justify-content-start">
           <div v-for="label in cardsLabels" :key="label" class="me-2">
             <LabelTemplate :text="label.name" :color="label.color" :bg_color="label.bg_color" />
           </div>
         </div>
+      </div>
+      <div class="d-flex flex-column p-3">
+        <h6 class="custom-small-text">Origin: {{ attrs.merch.origin }}</h6>
+        <h6 class="custom-small-text">{{ attrs.merch.merch_uuid }}</h6>
       </div>
     </div>
   </router-link>

@@ -79,15 +79,15 @@ export default {
 
         <img v-if="image" :src="image"
              class="card-img-top img-fluid w-auto mb-3 mb-md-0"
-             alt="Selected Image"
              width="400"
              height="640">
+<!--             alt="Selected Image"-->
 
         <img v-else :src="imageUrl"
              class="card-img-top img-fluid w-auto mb-3 mb-md-0"
-             alt="Selected Image"
              width="400"
              height="640">
+<!--             alt="Selected Image"-->
       </div>
       <input
           type="file"

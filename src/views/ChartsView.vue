@@ -55,7 +55,7 @@ export default {
     <PeriodSelector class="mt-2" @update:count="selectorUpdate" />
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 justify-content-evenly align-items-stretch mt-2">
       <div v-for="item in chartsData" :key="item" class="mt-2">
-        <router-link :to="{ name: 'merchdetail', params: { id: item.MerchUuid } }" class="custom-no-underline">
+        <router-link :to="{ name: 'merchdetail', params: { id: item.merch_uuid } }" class="custom-no-underline">
           <ChartCard :card-data="item"/>
         </router-link>
       </div>

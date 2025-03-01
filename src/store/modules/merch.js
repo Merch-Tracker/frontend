@@ -43,7 +43,7 @@ const mutations = {
 };
 
 const actions = {
-    async newMerch({ rootState }, payload) {
+    async createMerch({ rootState }, payload) {
         if (!rootState.authAndToken.isAuth) {
             return;
         }
@@ -73,13 +73,13 @@ const actions = {
         }
     },
 
-    async updateMerch({ rootState }, {merch_uuid, payload}) {
+    async updateMerch({ rootState }, payload) {
         if (!rootState.authAndToken.isAuth) {
             return;
         }
 
         try {
-            await axios.put(`/merch/${merch_uuid}`, payload, {headers: getHeaders(rootState)});
+            await axios.put(`/merch/`, payload, {headers: getHeaders(rootState)});
         }
 
         catch (error) {
@@ -87,14 +87,17 @@ const actions = {
         }
     },
 
-    async deleteMerch({ rootState, commit }, merch_uuid){
+    async deleteMerch({ rootState, commit }, payload){
         if (!rootState.authAndToken.isAuth) {
             return;
         }
 
         try {
-            await axios.delete(`/merch/${merch_uuid}`, {headers: getHeaders(rootState)});
-            commit("REMOVE_MERCH", merch_uuid);
+            await axios.delete(`/merch/`, {
+                headers: getHeaders(rootState),
+                data: payload,
+            });
+            commit("REMOVE_MERCH", payload.merch.merch_uuid);
         }
 
         catch (error) {
@@ -107,7 +110,8 @@ const getters = {
     readAllMerch: (state) => (state.merch ? state.merch : null),
     merchCount: (state) => (state.merch ? state.merch.length : 0),
     getMerchByUuid: (state) => (uuid) => {
-        return state.merch ? state.merch.find(item => item.MerchUuid === uuid) : null
+        // return state.merch ? state.merch.find(item => item.merch.merch_uuid === uuid) : null
+        return state.merch && state.merch[uuid] ? state.merch[uuid] : null;
     },
 
     getFilteredMerch: (state, getters, rootState) => {

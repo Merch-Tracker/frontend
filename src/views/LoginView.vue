@@ -63,7 +63,7 @@ export default {
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-4 m-3">
+      <div class="col-12 col-sm-12 col-md-9 col-lg-8 col-xl-6 col-xxl-5 m-3">
         <form id="login_form" @submit.prevent="handleLogin">
           <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 

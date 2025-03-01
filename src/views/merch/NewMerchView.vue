@@ -1,34 +1,47 @@
 <script>
 import {mapActions} from "vuex";
 import router from "@/router/index.js";
+import NewOriginSurugaya from "@/components/merch/NewOriginSurugaya.vue";
+import NewOriginMandarake from "@/components/merch/NewOriginMandarake.vue";
 
 export default {
   name: "NewMerchView",
+  components: {NewOriginMandarake, NewOriginSurugaya},
 
   data(){
     return {
-      newMerchData: {
-        name: "",
-        link: "",
-        parse_tag: "strong",
-        parse_substring: "¥￥",
-        cookie_values: "safe_search_expired=2;safe_search_option=3",
-        separator: "~",
+      origin: "surugaya",
+      merchName: "",
+
+      newMerch: {
+        merch: {
+          name: "",
+          origin: "",
+        },
+        data: {}
       }
     }
   },
 
   methods: {
-    ...mapActions("merch", ["newMerch"]),
+    ...mapActions("merch", ["createMerch"]),
     async submitNewMerch(){
       try {
-        await this.newMerch(this.newMerchData);
+        await this.createMerch(this.newMerch);
         await router.push({ name: "collection" });
       }
       catch(error){
         console.error(error);
       }
-    }
+    },
+
+    switchOrigin(o){
+      this.origin = o;
+    },
+
+    updateNewMerch(updatedValue){
+      this.newMerch = updatedValue;
+    },
   },
 }
 </script>
@@ -47,77 +60,48 @@ export default {
                    id="name"
                    placeholder="Enter merch name"
                    required
-                   v-model="newMerchData.name"
+                   v-model="newMerch.merch.name"
             >
             <div class="invalid-feedback">
               Please enter a name for new record.
             </div>
           </div>
 
-          <div class="col-12">
-            <label for="link" class="form-label">Link</label>
-            <input type="text"
-                   class="form-control"
-                   id="link"
-                   placeholder="Enter link name"
-                   required
-                   v-model="newMerchData.link"
-            >
-            <div class="invalid-feedback">
-              Please enter the link.
-            </div>
-          </div>
-
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <p class="nav-link active" aria-current="page">suruga-ya.jp</p>
+              <p class="nav-link"
+                 aria-current="page"
+                 :class="origin === 'surugaya' ? 'active' : ''"
+                 @click="switchOrigin('surugaya')"
+              >suruga-ya.jp</p>
+            </li>
+
+            <li class="nav-item">
+              <p class="nav-link"
+                 aria-current="page"
+                 :class="origin === 'mandarake' ? 'active' : ''"
+                 @click="switchOrigin('mandarake')"
+              >mandarake.co.jp</p>
             </li>
           </ul>
-          <div class="mt-2 col-12">
-            <label for="parse_tag" class="form-label">Parse tag</label>
-            <input type="text"
-                   class="form-control"
-                   id="parse_tag"
-                   v-model="newMerchData.parse_tag"
-                   placeholder="Enter parse tag here without <>"
-            >
+
+          <div v-if="origin === 'surugaya'">
+            <NewOriginSurugaya
+                :value="newMerch"
+                @input="updateNewMerch"
+            />
           </div>
 
-          <div class="mt-2 col-12">
-            <label for="parse_substring" class="form-label">Parse substring</label>
-            <input type="text"
-                   class="form-control"
-                   id="parse_substring"
-                   v-model="newMerchData.parse_substring"
-                   placeholder="Enter parse substring here"
-            >
+          <div v-else-if="origin === 'mandarake'">
+            <NewOriginMandarake
+                :value="newMerch"
+                @input="updateNewMerch"
+            />
           </div>
 
-          <div class="mt-2 col-12">
-            <label for="cookie_values" class="form-label mt-">Cookie values</label>
-            <input type="text"
-                   class="form-control"
-                   id="cookie_values"
-                   v-model="newMerchData.cookie_values"
-                   placeholder="Enter cookie values here"
-            >
-          </div>
-
-          <div class="mt-2 col-12">
-            <label for="separator" class="form-label mt-">Separator</label>
-            <input type="text"
-                   class="form-control"
-                   id="separator"
-                   v-model="newMerchData.separator"
-                   placeholder="Enter separator here"
-            >
-          </div>
-
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Create new record</button>
         </div>
-
-        <hr class="my-4">
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Create new record</button>
       </form>
     </div>
   </div>
