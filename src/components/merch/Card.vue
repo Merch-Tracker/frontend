@@ -35,10 +35,8 @@ export default {
     },
 
     makeLabels(){
-      if (this.labels) {
         const userLabels = this.getUserLabels;
-        this.cardsLabels = userLabels.filter(label => this.labels.includes(label.LabelUuid));
-      }
+        this.cardsLabels = userLabels.filter(label => this.attrs.labels.includes(label.LabelUuid));
     },
   },
 }
@@ -46,7 +44,7 @@ export default {
 
 <template>
   <router-link :to="{ name: 'merchdetail', params: { id: attrs.merch.merch_uuid } }" class="custom-no-underline">
-    <div class="card shadow" style="aspect-ratio: 4/7">
+    <div class="card shadow mb-3" style="aspect-ratio: 4/7">
       <div class="d-flex justify-content-center">
         <img v-if="image"
              :src="image"
@@ -60,7 +58,7 @@ export default {
       </div>
 
       <div class="p-3 d-flex flex-column">
-        <p class="card-text">Name: <strong>{{ attrs.merch.name }}</strong></p>
+        <p class="card-text"><strong>{{ attrs.merch.name }}</strong></p>
         <p class="card-text"><a :href="attrs.data.link" target="_blank" @click.stop>View on site</a></p>
         <p class="card-text">
           <span class="me-3">Price: <strong>{{ attrs.prices[0] }}</strong></span>
@@ -68,7 +66,7 @@ export default {
         </p>
         <div><a :href="`https://order.mandarake.co.jp/order/listPage/list?soldOut=1&keyword=${attrs.merch.name}`" target="_blank" @click.stop>View on mandarake</a></div>
         <div class="d-flex justify-content-start">
-          <div v-for="label in cardsLabels" :key="label" class="me-2">
+          <div v-for="label in cardsLabels" :key="label" class="mt-1 me-2">
             <LabelTemplate :text="label.name" :color="label.color" :bg_color="label.bg_color" />
           </div>
         </div>

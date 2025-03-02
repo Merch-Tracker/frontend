@@ -20,8 +20,6 @@ export default {
 
   methods:{
     setFilter(){
-      console.log("set filter");
-      console.log(this.getMerchFilters);
       const labelUuid = this.selectedLabel ? this.selectedLabel.LabelUuid : null;
       this.$store.dispatch("viewFilter/updateMerchFilters", {labelUuid: labelUuid});
     },

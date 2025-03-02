@@ -117,10 +117,10 @@ const getters = {
     getFilteredMerch: (state, getters, rootState) => {
         const merchFilters = rootState.viewFilter.merchFilters;
         if (!merchFilters) {
-            return state.merch;
+            return Object.values(state.merch);
         }
 
-        return state.merch.filter(item =>
+        return Object.values(state.merch).filter(item =>
             item.labels && item.labels.includes(merchFilters)
         );
     },
